@@ -2,9 +2,9 @@ clear
 
 spriteDisplayList = display(4).sprites
 
-curentSpeed = 3
+curentSpeed = 1
 maxSpeed = 10
-speedOverTheMinute = 1/25
+speedOverTheMinute = 1/1000
 
 groundImg = file.loadImage("/usr/Textures/Ground.png")
 groundScale = 3.5
