@@ -1,11 +1,14 @@
 clear 
 display(5).clear "#94fdff"
+display(3).color = "#4aabce"
 
 spriteDisplayList = display(4).sprites
 
+
+
 curentSpeed = 2
 maxSpeed = 18
-speedOverTheMinute = 1/60/20
+speedOverTheMinute = 1/60/30
 
 groundImg = file.loadImage("/usr/Textures/Ground.png")
 plyerImg = file.loadImage("/usr/Textures/Duck.png")
@@ -46,8 +49,9 @@ for x in range(-groundImg.width*groundScale,960+groundImg.width*groundScale,grou
 end for
 
 
+
 clearTextScreen = function()
-	display(3).color = "#000000FF"
+	display(3).color = "#4aabce"
 	display(3).clear
 	display(3).row = 25
 end function
@@ -57,12 +61,23 @@ min = function(a,b)
 	return b
 end function
 
+playerAnimation = function(startScale, endScale, curentTime)
+	return startScale + (endScale-startScale)*curentTime
+end function
 
+
+
+startTime = time
+curentTime = time-startTime
 
 while true
 	clearTextScreen
-	print "Speed =" + curentSpeed
-	print "Velocity =" + playerVelocity
+	print "Speed = " + curentSpeed
+	print "Velocity = " + playerVelocity
+	print "Time = " + (curentTime)
+	print "Animation = " + playerAnimation(1,6,curentTime/2)
+	
+	curentTime = time-startTime
 	
 	isJump = key.pressed("w");
 	
