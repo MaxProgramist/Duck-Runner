@@ -3,9 +3,9 @@ display(5).clear "#94fdff"
 
 spriteDisplayList = display(4).sprites
 
-curentSpeed = 1
-maxSpeed = 10
-speedOverTheMinute = 1/1000
+curentSpeed = 2
+maxSpeed = 18
+speedOverTheMinute = 1/60/20
 
 groundImg = file.loadImage("/usr/Textures/Ground.png")
 plyerImg = file.loadImage("/usr/Textures/Duck.png")
@@ -15,7 +15,17 @@ playerSprite.image = plyerImg.getImage(0, 0, 18, 24)
 playerSprite.y = 120
 playerSprite.x = 60
 playerSprite.scale = 3.5
+playerSprite.localBounds = new Bounds
+playerSprite.localBounds.width = plyerImg.width
+playerSprite.localBounds.height = plyerImg.height
+
 spriteDisplayList.push playerSprite
+
+playerVelocity = 0
+playerJumpVelocity = 20
+grvityForce = 1.1
+
+onGround = true
 
 groundScale = 3.5
 
@@ -37,7 +47,7 @@ end for
 
 
 clearTextScreen = function()
-	display(3).color = "#ffffff"
+	display(3).color = "#000000FF"
 	display(3).clear
 	display(3).row = 25
 end function
@@ -51,6 +61,23 @@ end function
 
 while true
 	clearTextScreen
+	print "Speed =" + curentSpeed
+	print "Velocity =" + playerVelocity
+	
+	isJump = key.pressed("w");
+	
+	if not onGround then 
+		playerVelocity -= grvityForce
+	else
+		playerVelocity = 0
+	end if
+	
+	if isJump and onGround then 
+		playerVelocity = playerJumpVelocity
+		onGround = false
+	end if
+	
+	playerSprite.y += playerVelocity
 	
 	curentSpeed = min(curentSpeed+speedOverTheMinute, maxSpeed)
 	
@@ -59,7 +86,12 @@ while true
 		if curentGroundSprite.x<=-groundImg.width*groundScale then 
 			curentGroundSprite.x = groundImg.width*groundScale*groundSprites.len - abs(curentGroundSprite.x -groundImg.width*groundScale)
 		end if
+		
+		if curentGroundSprite.overlaps(playerSprite) then
+			onGround = true
+			playerSprite.y = curentGroundSprite.y + groundImg.height*groundScale/2 + playerSprite.image.height/2 * 3.5
+		end if
 	end for
 	
-	yield
+	wait 1/60
 end while
