@@ -13,7 +13,7 @@ plyerImg = file.loadImage("/usr/Textures/Duck.png")
 playerSprite = new Sprite
 playerSprite.image = plyerImg.getImage(0, 0, 18, 24)
 playerSprite.y = 120
-playerSprite.x = 60
+playerSprite.x = 90
 playerSprite.scale = 3.5
 playerSprite.localBounds = new Bounds
 playerSprite.localBounds.width = plyerImg.width
@@ -22,8 +22,8 @@ playerSprite.localBounds.height = plyerImg.height
 spriteDisplayList.push playerSprite
 
 playerVelocity = 0
-playerJumpVelocity = 20
-grvityForce = 1.1
+playerJumpVelocity = 15
+grvityForce = 0.4
 
 onGround = true
 
@@ -93,5 +93,5 @@ while true
 		end if
 	end for
 	
-	wait 1/60
+	yield
 end while
