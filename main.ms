@@ -1,4 +1,5 @@
-clear
+clear 
+display(5).clear "#94fdff"
 
 spriteDisplayList = display(4).sprites
 
@@ -7,6 +8,15 @@ maxSpeed = 10
 speedOverTheMinute = 1/1000
 
 groundImg = file.loadImage("/usr/Textures/Ground.png")
+plyerImg = file.loadImage("/usr/Textures/Duck.png")
+
+playerSprite = new Sprite
+playerSprite.image = plyerImg.getImage(0, 0, 18, 24)
+playerSprite.y = 120
+playerSprite.x = 60
+playerSprite.scale = 3.5
+spriteDisplayList.push playerSprite
+
 groundScale = 3.5
 
 groundSprites = []
@@ -15,13 +25,19 @@ for x in range(-groundImg.width*groundScale,960+groundImg.width*groundScale,grou
 	curentGroundSprite.image = groundImg
 	curentGroundSprite.y = 25
 	curentGroundSprite.x = x
+	
+	curentGroundSprite.localBounds = new Bounds
+	curentGroundSprite.localBounds.width = groundImg.width
+	curentGroundSprite.localBounds.height = groundImg.height
+	
 	curentGroundSprite.scale = groundScale
 	spriteDisplayList.push curentGroundSprite
 	groundSprites.push curentGroundSprite
 end for
 
 
-clearScreen = function()
+clearTextScreen = function()
+	display(3).color = "#ffffff"
 	display(3).clear
 	display(3).row = 25
 end function
@@ -34,7 +50,7 @@ end function
 
 
 while true
-	clearScreen
+	clearTextScreen
 	
 	curentSpeed = min(curentSpeed+speedOverTheMinute, maxSpeed)
 	
