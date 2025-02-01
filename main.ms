@@ -75,7 +75,7 @@ while true
 	print "Speed = " + curentSpeed
 	print "Velocity = " + playerVelocity
 	print "Time = " + (curentTime)
-	print "Animation = " + playerAnimation(1,6,curentTime/2)
+	print "Animation = " + playerAnimation (1,6,curentTime)
 	
 	curentTime = time-startTime
 	
