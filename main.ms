@@ -67,12 +67,8 @@ min = function(a,b)
 	return b
 end function
 
-playerAnimation = function(startScale, endScale, curentTime)
-	return startScale + (endScale-startScale)*curentTime
-end function
-
-easeInSine = function(x)
-	return 1 - cos((@x * pi) / 2)
+playerAnimation = function(curentTime)
+	return 1-curentTime
 end function
 
 
@@ -85,7 +81,6 @@ while true
 	print "Speed = " + curentSpeed
 	print "Velocity = " + playerVelocity
 	print "Time = " + (curentTime)
-	print "Animation = " + easeInSine (curentTime)
 	
 	curentTime = time-startTime
 	
