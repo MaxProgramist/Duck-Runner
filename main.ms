@@ -11,10 +11,15 @@ maxSpeed = 18
 speedOverTheMinute = 1/60/30
 
 groundImg = file.loadImage("/usr/Textures/Ground.png")
-plyerImg = file.loadImage("/usr/Textures/Duck.png")
+plyerImgSheet = file.loadImage("/usr/Textures/Duck.png")
+
+plyerImgFrames = []
+for i in range(0, 3)
+	plyerImgFrames.push plyerImgSheet.getImage(i * 18, 0, 18, 24)
+end for
 
 playerSprite = new Sprite
-playerSprite.image = plyerImg.getImage(0, 0, 18, 24)
+playerSprite.image = plyerImgFrames[0]
 playerSprite.y = 120
 playerSprite.x = 90
 playerSprite.scale = 3.5
@@ -27,6 +32,7 @@ spriteDisplayList.push playerSprite
 playerVelocity = 0
 playerJumpVelocity = 15
 grvityForce = 0.4
+playerAnimSpeed = 5
 
 onGround = true
 
@@ -65,6 +71,10 @@ playerAnimation = function(startScale, endScale, curentTime)
 	return startScale + (endScale-startScale)*curentTime
 end function
 
+easeInSine = function(x)
+	return 1 - cos((@x * pi) / 2)
+end function
+
 
 
 startTime = time
@@ -75,9 +85,11 @@ while true
 	print "Speed = " + curentSpeed
 	print "Velocity = " + playerVelocity
 	print "Time = " + (curentTime)
-	print "Animation = " + playerAnimation (1,6,curentTime)
+	print "Animation = " + easeInSine (curentTime)
 	
 	curentTime = time-startTime
+	
+	playerSprite.image = plyerImgFrames[(time * playerAnimSpeed + curentSpeed) % plyerImgFrames.len]
 	
 	isJump = key.pressed("w");
 	
