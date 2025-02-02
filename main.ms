@@ -36,6 +36,11 @@ playerAnimSpeed = 5
 
 onGround = true
 
+isJumping = false
+jumpingAnimation = 0.2
+curentJumpingAnimtion = 0
+jumpTimeStart = 0
+
 groundScale = 3.5
 
 groundSprites = []
@@ -67,8 +72,8 @@ min = function(a,b)
 	return b
 end function
 
-playerAnimation = function(curentTime)
-	return 1-curentTime
+jumpAnimation = function(timeChanger)
+	
 end function
 
 
@@ -81,12 +86,21 @@ while true
 	print "Speed = " + curentSpeed
 	print "Velocity = " + playerVelocity
 	print "Time = " + (curentTime)
+	print "Jump = " + curentJumpingAnimtion
 	
 	curentTime = time-startTime
 	
 	playerSprite.image = plyerImgFrames[(time * playerAnimSpeed + curentSpeed) % plyerImgFrames.len]
 	
 	isJump = key.pressed("w");
+	if isJumping then 
+		if curentJumpingAnimtion<0 then 
+			isJumping = false
+			curentJumpingAnimtion = 0
+		else
+			curentJumpingAnimtion = jumpingAnimation - (time - jumpTimeStart)
+		end if
+	end if
 	
 	if not onGround then 
 		playerVelocity -= grvityForce
@@ -97,6 +111,10 @@ while true
 	if isJump and onGround then 
 		playerVelocity = playerJumpVelocity
 		onGround = false
+		
+		isJumping = true
+		curentJumpingAnimtion = jumpingAnimation
+		jumpTimeStart = curentTime
 	end if
 	
 	playerSprite.y += playerVelocity
