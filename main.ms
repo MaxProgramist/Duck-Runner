@@ -24,16 +24,18 @@ playerSprite.y = 120
 playerSprite.x = 90
 playerSprite.scale = 3.5
 playerSprite.localBounds = new Bounds
-playerSprite.localBounds.width = plyerImg.width
-playerSprite.localBounds.height = plyerImg.height
+playerSprite.localBounds.width = plyerImgFrames[0].width
+playerSprite.localBounds.height = plyerImgFrames[0].height
 
 spriteDisplayList.push playerSprite
 
+playerScaleBase = 3.5
+playerScaleChanger = 0.4
 playerVelocity = 0
 playerJumpVelocity = 15
 grvityForce = 0.4
-playerAnimSpeed = 5
-
+playerAnimSpeed = 7
+playerScale = [playerScaleBase, playerScaleBase]
 onGround = true
 
 isJumping = false
@@ -92,13 +94,25 @@ while true
 	
 	playerSprite.image = plyerImgFrames[(time * playerAnimSpeed + curentSpeed) % plyerImgFrames.len]
 	
+	playerSprite.scale = playerScale
+	
 	isJump = key.pressed("w");
-	if isJumping then 
+	if isJumping then
+		if curentJumpingAnimtion > 0.5*jumpingAnimation then
+			playerScale[0] -= playerScaleChanger
+			playerScale[1] += playerScaleChanger
+		else
+			playerScale[0] += playerScaleChanger
+			playerScale[1] -= playerScaleChanger
+		end if
+		
 		if curentJumpingAnimtion<0 then 
 			isJumping = false
 			curentJumpingAnimtion = 0
+			playerScale[0] = playerScaleBase
+			playerScale[1] = playerScaleBase
 		else
-			curentJumpingAnimtion = jumpingAnimation - (time - jumpTimeStart)
+			curentJumpingAnimtion = jumpingAnimation - (time - jumpTimeStart)	
 		end if
 	end if
 	
