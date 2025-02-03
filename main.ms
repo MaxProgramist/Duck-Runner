@@ -7,8 +7,8 @@ spriteDisplayList = display(4).sprites
 
 
 curentSpeed = 2
-maxSpeed = 18
-speedOverTheMinute = 1/60/30
+maxSpeed = 16
+speedOverTheMinute = 1/60/25
 
 groundImg = file.loadImage("/usr/Textures/Ground.png")
 plyerImgSheet = file.loadImage("/usr/Textures/Duck.png")
@@ -96,7 +96,7 @@ while true
 	
 	playerSprite.scale = playerScale
 	
-	isJump = key.pressed("w");
+	isJump = key.pressed("w") or key.pressed("up") or key.pressed("space") ;
 	if isJumping then
 		if curentJumpingAnimtion > 0.5*jumpingAnimation then
 			playerScale[0] -= playerScaleChanger
