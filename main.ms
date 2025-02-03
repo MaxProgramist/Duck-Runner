@@ -12,6 +12,8 @@ speedOverTheMinute = 1/60/25
 
 groundImg = file.loadImage("/usr/Textures/Ground.png")
 plyerImgSheet = file.loadImage("/usr/Textures/Duck.png")
+otherImgSheet = file.loadImage("/usr/Textures/Other.png")
+particleImg = file.loadImage("/usr/Textures/Particle.png")
 
 plyerImgFrames = []
 for i in range(0, 3)
